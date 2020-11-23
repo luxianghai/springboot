@@ -2,8 +2,10 @@ package cn.sea;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication // 组合注解：@EnableAutoConfiguration + @ComponentScan + ...
+@ImportResource("classpath:spring.xml")
 public class Application {
 
     // 主入口类
