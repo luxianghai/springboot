@@ -1,0 +1,4 @@
+server:
+  port: 8989 # 修改内嵌tomcat容器的端口号
+  servlet:
+    context-path: /springboot_day1  # 指定当前应用在部署到内嵌tomcat容器中的项目名(访问时需要加上应用名)
