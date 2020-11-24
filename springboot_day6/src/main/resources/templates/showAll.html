@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <table border="1">
+    <tr>
+      <th>编号</th>
+      <th>姓名</th>
+      <th>年龄</th>
+      <th>生日</th>
+    </tr>
+    <tr th:each="user, userStatus:${users}">
+      <td th:text="${userStatus.count}"></td>
+      <td th:text="${user.name}"></td>
+      <td th:text="${user.age}"></td>
+      <td th:text="${#dates.format(user.bir, 'yyyy-HH-dd')}"></td>
+    </tr>
+  </table>
+</body>
+</html>
