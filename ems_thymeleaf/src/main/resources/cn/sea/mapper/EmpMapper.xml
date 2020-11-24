@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 的值为 dao接口 的全限定类名 -->
+<mapper namespace="cn.sea.dao.EmpDao">
+
+    <select id="findAll" resultType="cn.sea.entity.Emp">
+        select id, `name`, salary, age, bir from t_emp
+    </select>
+
+    <select id="save" resultType="cn.sea.entity.Emp">
+        insert into t_emp values(#{id}, #{name}, #{salary}, #{age}, #{bir})
+    </select>
+
+    <delete id="delete" parameterType="string">
+        delete from t_emp where id = #{id}
+    </delete>
+
+    <select id="find" parameterType="string" resultType="cn.sea.entity.Emp">
+        select id, `name`, salary, age, bir from t_emp where id = #{id}
+    </select>
+
+    <update id="update" parameterType="cn.sea.entity.Emp">
+        update t_emp set `name`=#{name}, age=#{age}, salary=#{salary}, bir=#{bir} where id = #{id}
+    </update>
+
+</mapper>

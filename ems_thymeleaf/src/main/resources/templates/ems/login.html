@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en" xmlns="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>login</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,7 +30,7 @@
 					<h1>
 						login
 					</h1>
-					<form action="emplist.html" method="post">
+					<form th:action="@{/user/login}" method="post">
 						<table cellpadding="0" cellspacing="0" border="0"
 							class="form_table">
 							<tr>
@@ -38,7 +38,7 @@
 									username:
 								</td>
 								<td valign="middle" align="left">
-									<input type="text" class="inputgri" name="name" />
+									<input type="text" class="inputgri" name="username" />
 								</td>
 							</tr>
 							<tr>
@@ -46,13 +46,13 @@
 									password:
 								</td>
 								<td valign="middle" align="left">
-									<input type="password" class="inputgri" name="pwd" />
+									<input type="password" class="inputgri" name="password" />
 								</td>
 							</tr>
 						</table>
 						<p>
 							<input type="submit" class="button" value="Submit &raquo;" />
-							<input type="button" class="button" onclick="location.href='./regist.html'" value="Regist &raquo;" />
+							<input type="button" class="button" onclick="location.href='/ems/toRegister'" value="Regist &raquo;" />
 						</p>
 					</form>
 				</div>
