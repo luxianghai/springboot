@@ -3,6 +3,7 @@ package cn.sea.controller;
 import cn.sea.entity.User;
 import cn.sea.service.UserService;
 import cn.sea.util.ValidateImageCodeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,12 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
+
+    // 声明日志对象
+    //private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 
     @Autowired
     private UserService userService;
@@ -28,6 +34,8 @@ public class UserController {
     @GetMapping("/delete")
     public String delete(String id) {
         System.out.println("delete id = " + id);
+        log.info("info信息 ~ ~");
+        log.debug("debug信息 ~ ~");
         return id;
     }
 
@@ -35,7 +43,6 @@ public class UserController {
     @GetMapping("/save")
     public String save(String username) {
         System.out.println("save username = " + username);
-        System.out.println("hhhhhhh");
         return username;
     }
 

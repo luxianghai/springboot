@@ -8,12 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/emp")
 public class EmpController {
+
 
     @Autowired
     private EmpService empService;
@@ -37,6 +39,15 @@ public class EmpController {
         List<Emp> emps = empService.findAll();
         model.addAttribute("emps", emps);
         return "ems/emplist";
+    }
+
+    // 查询所有员工
+    @GetMapping("/findAllb")
+    @ResponseBody
+    public List<Emp> findAllb() {
+
+        List<Emp> emps = empService.findAll();
+        return emps;
     }
 
     // 添加员工信息

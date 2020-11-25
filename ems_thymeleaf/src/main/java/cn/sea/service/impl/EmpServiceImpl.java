@@ -21,11 +21,13 @@ public class EmpServiceImpl implements EmpService {
     @Override
     @Transactional( propagation = Propagation.SUPPORTS)
     public List<Emp> findAll() {
+        // 日志处理
         return empDao.findAll();
     }
 
     @Override
     public void save(Emp emp) {
+        // 日志处理
         emp.setId(UUID.randomUUID().toString());
         empDao.save(emp);
     }
