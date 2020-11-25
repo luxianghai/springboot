@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!--定义项目中日志输出位置-->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!--定义项目的日志输出格式-->
+        <!--定义项目的日志输出格式-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- %m：主线程名  %n：换行 %c：换行 %L：在哪行打印的日志信息 -->
+            <pattern> [%p] %d{yyyy-MM-dd HH:mm:ss} [%L] [%c] %m %n</pattern>
+        </layout>
+    </appender>
+
+    <!--项目中根日志控制-->
+    <root level="INFO">
+        <!-- 引用哪个变量 -->
+        <appender-ref ref="stdout"/>
+    </root>
+
+    <!--项目中指定包的日志控制-->
+    <logger name="cn.sea.dao" level="DEBUG"/>
+
+</configuration>
