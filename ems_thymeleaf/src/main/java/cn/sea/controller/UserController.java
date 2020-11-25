@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -22,6 +23,22 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @ResponseBody
+    @GetMapping("/delete")
+    public String delete(String id) {
+        System.out.println("delete id = " + id);
+        return id;
+    }
+
+    @ResponseBody
+    @GetMapping("/save")
+    public String save(String username) {
+        System.out.println("save username = " + username);
+        System.out.println("hhhhhhh");
+        return username;
+    }
+
 
     // 登录方法
     @PostMapping("/login")
