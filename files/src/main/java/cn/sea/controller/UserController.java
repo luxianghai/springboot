@@ -4,8 +4,10 @@ import cn.sea.entity.User;
 import cn.sea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,10 +24,16 @@ public class UserController {
         if ( login != null ) {
             System.out.println("login = " + login);
             session.setAttribute("user", login);
-            session.setAttribute("name", "hello");
             return "redirect:/file/showAll";
         } else {
             return "redirect:/index";
         }
     }
+
+    @GetMapping("/test")
+    @ResponseBody
+    public String test() {
+        return "test";
+    }
+
 }
