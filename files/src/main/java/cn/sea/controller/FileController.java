@@ -3,6 +3,7 @@ package cn.sea.controller;
 import cn.sea.entity.User;
 import cn.sea.entity.UserFile;
 import cn.sea.service.UserFileService;
+import io.swagger.annotations.*;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Api(tags = "文件控制器 FileController")
 @Controller
 @RequestMapping("/file")
 public class FileController {
@@ -36,9 +39,10 @@ public class FileController {
     private UserFileService userFileService;
 
     // 以json格式返回当前用户所有的文件信息，
+    @ApiOperation("查询当前用户的所有文件信息，并以JSON格式返回")
     @GetMapping("/findAllJSON")
     @ResponseBody
-    public List<UserFile> findAllJSON(HttpSession session) {
+    public List<UserFile> findAllJSON(@ApiIgnore HttpSession session) {
         // 在登录的session中获取用户信息
         User user = (User) session.getAttribute("user");
         // 根据用户id查询所有的文件信息
@@ -50,8 +54,9 @@ public class FileController {
      * 删除文件
      * @param id
      */
+    @ApiOperation("根据文件id删除文件")
     @GetMapping("/delete")
-    public String delete(Integer id) throws FileNotFoundException {
+    public String delete(@ApiParam(value = "文件id",required = true) Integer id) throws FileNotFoundException {
         // 根据id查询信息
         UserFile userFile = userFileService.findById(id);
         // 获取用户要删除的文件的路径
@@ -76,8 +81,13 @@ public class FileController {
      * @param response
      * @throws IOException
      */
+    @ApiOperation("根据文件id打开或下载文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openStyle" , value = "文件的打开方式attachment：附件，inline:在线打开", required = false),
+            @ApiImplicitParam(name = "id", value = "文件id",required = true)
+    })
     @GetMapping("/download")
-    public void download(String openStyle, Integer id, HttpServletResponse response) throws IOException {
+    public void download(String openStyle, Integer id, @ApiIgnore HttpServletResponse response) throws IOException {
         // 获取打开方式
         openStyle = openStyle == null ? "attachment" : openStyle;
         // 获取文件信息
@@ -109,8 +119,9 @@ public class FileController {
      * @return
      * @throws IOException
      */
+    @ApiOperation("文件上传")
     @PostMapping("/upload")
-    public String upload(MultipartFile file, HttpSession session) throws IOException {
+    public String upload(@ApiParam("文件") MultipartFile file, @ApiIgnore HttpSession session) throws IOException {
         // 0.获取登录用户的信息
         User user = (User) session.getAttribute("user");
 
@@ -157,6 +168,7 @@ public class FileController {
      * @param session
      * @return
      */
+    @ApiIgnore
     @GetMapping("/showAll")
     public String findAll(Model model, HttpSession session) {
         // 在登录的session中获取用户信息

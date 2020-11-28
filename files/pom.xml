@@ -63,6 +63,19 @@
             <version>1.4</version>
         </dependency>
 
+        <!-- swagger 所需的两个依赖 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
         <!--去掉内嵌tomcat-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
