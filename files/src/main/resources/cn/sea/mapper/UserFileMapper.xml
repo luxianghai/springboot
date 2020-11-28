@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 的值为 dao接口 的全限定类名 -->
+<mapper namespace="cn.sea.dao.UserFileDAO">
+
+    <!-- 删除文件 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM `t_files` WHERE `id`=#{id}
+    </delete>
+
+    <!-- 更新文件下载次数 -->
+    <update id="updateDownloadCounts" parameterType="cn.sea.entity.UserFile">
+        UPDATE `t_files` set `downloadCounts` = #{downloadCounts}
+        WHERE `id` = #{id}
+    </update>
+
+    <!-- 根据id查询文件信息 -->
+    <select id="findById" parameterType="int" resultType="cn.sea.entity.UserFile">
+        SELECT `id`,`oldFileName`,`newFileName`,`ext`,`path`,
+        `size`,`type`,`isimg`,`downloadCounts`,`uploadTime`,`userId`
+        FROM `t_files`
+        WHERE `id` = #{id}
+    </select>
+
+    <!-- 根据用户id查询当前用户的文件信息 -->
+    <select id="findByUserId" parameterType="int" resultType="cn.sea.entity.UserFile">
+        SELECT `id`,`oldFileName`,`newFileName`,`ext`,`path`,
+        `size`,`type`,`isimg`,`downloadCounts`,`uploadTime`,`userId`
+        FROM `t_files`
+        WHERE `userId` = #{userId}
+    </select>
+
+    <!-- 保存文件信息 -->
+    <insert id="save" parameterType="cn.sea.entity.UserFile" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `t_files`
+        VALUES(#{id},#{oldFileName},#{newFileName},
+        #{ext},#{path},#{size},#{type},#{isimg},
+        #{downloadCounts},#{uploadTime},#{userId})
+    </insert>
+
+</mapper>

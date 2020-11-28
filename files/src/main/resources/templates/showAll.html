@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>用户文件列表页面</title>
+  <script th:src="@{/js/jquery-3.4.1.js}"></script>
+  <script>
+
+    $(function () {
+
+      let time;
+      // 开启定时更新
+      $('#start').click(function () {
+        /* 每三秒发送一次ajax请求 */
+        time = setInterval(function () {
+          $.get("[[@{/file/findAllJSON}]]", function (res) {
+            // 遍历
+            $.each(res, function (index, file) {
+              $('#'+file.id).text(file.downloadCounts);
+            })
+          });
+        }, 3000);
+      });
+
+      // 结束定时更新
+      $('#stop').click(function () {
+        clearInterval(time);
+      });
+
+    })
+  </script>
+</head>
+<body>
+<h1>欢迎：<span th:if="${session.user != null}" th:text="${session.user.username}"></span></h1>
+<button id="start">开启定时更新</button>
+<button id="stop">关闭定时更新</button>
+<h3>文件列表</h3>
+<table border="1px" style="border-collapse: collapse;border-spacing: 2px;text-align: center ">
+  <tr>
+    <th>ID</th>
+    <th>文件原始名称</th>
+    <th>新的文件名称</th>
+    <th>文件后缀</th>
+    <th>存储路径</th>
+    <th>文件大小</th>
+    <th>文件类型</th>
+    <th>是否是图片</th>
+    <th>下载次数</th>
+    <th>上传时间</th>
+    <th>操作</th>
+  </tr>
+  <tr th:if="${files != null and files.size() > 0}"  th:each="file,fileStatus:${files}"> <!--th:if="${file != null and file.size > 0 }"-->
+    <td><span th:text="${file.getId()}"></span></td>
+    <td><span th:text="${file.getOldFileName()}"></span></td>
+    <td><span th:text="${file.getNewFileName()}"></span></td>
+    <td><span th:text="${file.getExt()}"></span></td>
+    <td><span th:text="${file.getPath()}"></span></td>
+    <td><span th:text="${file.getSize()}"></span></td>
+    <td><span th:text="${file.getType()}"></span></td>
+    <td>
+      <!-- @{/} = ${#servletContext.getContextPath()} :获取当前项目路径 -->
+      <img th:if="${file.getIsimg() == '是'}" style="width:100px;text-align: center;" th:src="${#servletContext.getContextPath()}+${file.getPath()}+'/'+${file.getNewFileName()}" alt="">
+      <!--<img th:if="${file.getIsimg() == '是'}" th:src="@{/}+'/'+${file.getPath()}+'/'+${file.getNewFileName()}" alt="">-->
+      <span th:if="${file.getIsimg() == '否'}" th:text="${file.getIsimg()}"></span>
+    </td>
+    <td><span th:id="${file.getId()}" th:text="${file.getDownloadCounts()}"></span></td>
+    <td><span th:text="${#dates.format(file.getUploadTime(), 'yyyy/MM/dd')}"></span></td>
+    <td>
+      <a th:href="@{/file/download(id=${file.getId()})}">下载</a> &nbsp;
+      <a th:href="@{/file/download(id=${file.getId()},openStyle='inline')}">在线打开</a> &nbsp;
+      <a th:href="@{/file/delete(id=${file.getId()})}">删除</a> &nbsp;
+    </td>
+  </tr>
+</table>
+<hr>
+<h3>上传文件</h3>
+<form th:action="@{/file/upload}" method="post" enctype="multipart/form-data">
+  <input type="file" name="file">
+  <input type="submit" value="上传文件">
+</form>
+</body>
+</html>
