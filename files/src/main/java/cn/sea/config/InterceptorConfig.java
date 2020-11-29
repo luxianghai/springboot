@@ -21,6 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/**") // 代表以什么样的请求路径访问静态资源(/**：表示所有)
                 .addResourceLocations("classpath:/static/")
                 .addResourceLocations("classpath:/templates/")
-                .addResourceLocations("swagger-ui.html");
+                .addResourceLocations("swagger-ui.html")
+                .addResourceLocations("doc.html");
     }
 }
